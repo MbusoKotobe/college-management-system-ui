@@ -2,30 +2,112 @@
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <!-- <th scope="col">#</th> -->
       <th scope="col">Department Id</th>
       <th scope="col">Department Name</th>
       <th scope="col">Department Description</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+    <tr *ngFor="let department of departments; index as i;">
+      <!-- <th scope="row">{{i+1}}</th> -->
+      <td>{{department.departmentId}}</td>
+      <td>{{department.departmentName}}</td>
+      <td>{{department.departmentDescription}}</td>
     </tr>
   </tbody>
 </table>
+<td>
+  <button type="button" class="btn btn-danger" (click)="onDeleteDepartment(department)">Delete</button>
+</td>
+
+
+<!--ADD DEPARTMENT MODAL-->
+<div class="modal" tabindex="-1" id="addWardModal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title">Add a department</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+
+    <div class="mb-3">
+      <label for="wardId" class="form-label">Department ID</label>
+      <input type="text" ngModel name="departmentId" class="form-control" id="departmentId" aria-describedby="basic-addon1" required>
+    </div>
+    <div class="mb-3">
+      <label for="departmentName" class="form-label">Department Name</label>
+      <input type="text" ngModel name="departmentName" class="form-control" id="departmentName" aria-describedby="basic-addon1" required>
+    </div>
+    <div class="mb-3">
+      <label for="departmentDescription" class="form-label">Department Description</label>
+      <input type="text" ngModel name="departmentDescription" class="form-control" id="departmentDescription" aria-describedby="basic-addon1" required>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="department-close-button">Close
+      </button>
+
+    </div>
+
+</div>
+</div>
+</div>
+</div>
+
+<!--DELETE DEPARTMENT MODAL-->
+<div class="modal" tabindex="-1" id="deleteDepartmentModal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title">Delete department</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+  <p>Are you sure you want to delete department: {{ onDeleteDepartment }}?</p>
+  <form>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="delete-modal-close">Close</button>
+   
+    </div>
+  </form>
+</div>
+</div>
+</div>
+</div>
+
+<!--EDIT or UPDATE DEPARTMENT MODAL-->
+<div class="modal" tabindex="-1" id="editDepartmentModal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title">Update department: {{ updateDepartment}}</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+
+    <div class="mb-3">
+      <label for="wardId" class="form-label">Department ID</label>
+             aria-describedby="basic-addon1" required readonly>
+    </div>
+    <div class="mb-3">
+      <label for="departmentName" class="form-label">Department Name</label>
+   
+             id="updatedDepartmentName" aria-describedby="basic-addon1" required>
+    </div>
+    <div class="mb-3">
+      <label for="departmentDescription" class="form-label">department Description</label>
+    
+             id="updatedDepartmentDescription" aria-describedby="basic-addon1" required>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="updated-department-close-button">
+        Close
+      </button>
+    >
+    </div>
+
+</div>
+</div>
+</div>
+</div>

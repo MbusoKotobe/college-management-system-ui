@@ -3,29 +3,95 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Faculty Name</th>
+      <th scope="col">Faculty Description</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+    <tr *ngFor="let faculty of faculties; index as i;" (click)="showEditFacultyModal(faculty)">
+      <th scope = i> faculty.facultyId</th>
+      <td>faculty.facultyName</td>
+      <td>faculty.facultyDescription</td>
+      <td>
+        <button type="button" class="btn btn-danger">Delete</button>
+      </td>
     </tr>
   </tbody>
 </table>
+
+<!-- Create Faculty Modal -->
+<div class="modal" id="createFacultyModalId" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="facultyForm" (ngSubmit)="submitFaculty()">
+          <div>
+            <label for="facultyName" class="form-label">Faculty Name</label>
+            <input type="text" formControlName="facultyName" class="form-control" id="facultyNameId"
+              aria-describedby="basic-addon1" required>
+
+            <label for="facultyDescription" class="form-label">Faculty Description</label>
+            <textarea formControlName="facultyDescription" class="form-control" id="facultyDescriptionId"
+              aria-describedby="basic-addon1" required>
+            </textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- 
+</form> -->
+
+  <!-- Edit Faculty Modal 
+<div class="modal fade" id="editFacultyModalId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="editFacultyForm" (ngSubmit)="submitFaculty()" >
+        <div>  
+          <label for="facultyName" class="form-label">Faculty Name</label>
+          <input type="text" 
+                 formControlName="facultyName" 
+                 class="form-control" id="editFacultyNameId" 
+                 aria-describedby="basic-addon1"
+                 required 
+          >
+
+          <label for="facultyDescription" class="form-label">Faculty Name</label>
+          <textarea
+                 formControlName="facultyDescription" 
+                 class="form-control" id="editFacultyDescriptionId" 
+                 aria-describedby="basic-addon1"
+                 required 
+          >
+          </textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>-->
