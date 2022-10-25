@@ -11,6 +11,8 @@ import { SignupComponent } from './signup/signup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { CourseComponent } from './course/course.component';
+import { ModulexComponent } from './modulex/modulex.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { ToastrModule } from 'ngx-toastr';
     FacultyComponent,
     NavbarComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    CourseComponent,
+    ModulexComponent
   ],
   imports: [
     BrowserModule,
