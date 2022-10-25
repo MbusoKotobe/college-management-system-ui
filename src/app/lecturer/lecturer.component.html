@@ -1,10 +1,146 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+<app-navbar></app-navbar>
+<div class="container pt-4" id="main-container-lecturer">
+  <h2 class="collegeSysHeading">Lecturer Management Page</h2>
+  <button type="button" class="btn btn-success" (click)="onOpenModalLecturer(null, 'add')">Add new</button>
+  <hr>
+  <table class="table">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">lecturerId</th>
+    <th scope="col">firstName</th>
+    <th scope="col">middleName</th>
+    <th scope="col">lastName</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let lecturer of lecturer; let i = index">
+    <th scope="row">{{i + 1}}</th>
+    <td><span class="link-primary" role="button" (click)="onOpenModalLecturer(lecturer, 'edit')">{{ lecturer.lecturerId }}</span></td>
+    <td>{{ lecturer.firstName }}</td>
+    <td>{{ lecturer.middleName }}</td>
+    <td>{{ lecturer.lastName }}</td>
+    <td>
+      <button type="button" class="btn btn-danger" (click)="onOpenModalLecturer(lecturer, 'delete')">Delete</button>
+    </td>
+  </tr>
+  </tbody>
+  </table>
+</div>
 
-</body>
-</html>
+<!--ADD LECTURER MODAL-->
+<div class="modal" tabindex="-1" id="addLecturerModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Lecturer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #addLecturerForm="ngForm" (ngSubmit)="onAddLecturer(addLecturerForm)">
+
+          <div class="mb-3">
+            <label for="lecturerId" class="form-label">Lecturer Id</label>
+            <input type="text" ngModel pattern = "[0-9]*" name="lecturerId" class="form-control" id="lecturerId"
+                   aria-describedby="basic-addon1" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="firstName" class="form-label">Name</label>
+            <input type="text" ngModel pattern = "[a-zA-Z ]*" name="firstName" class="form-control" id="firstName" aria-describedby="basic-addon1"
+                   required>
+          </div>
+
+          <div class="mb-3">
+            <label for="middleName" class="form-label">Middle Name</label>
+            <input type="text" ngModel pattern = "[a-zA-Z ]*" name="middleName" class="form-control" id="middleName" aria-describedby="basic-addon1"
+                   required>
+          </div>
+
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Surname</label>
+            <input type="text" ngModel pattern = "[a-zA-Z ]*" name="lastName" class="form-control" id="lastName" aria-describedby="basic-addon1"
+                   required>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="lecturer-close-button">Close
+            </button>
+            <button [disabled]="addLecturerForm.form.invalid" type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--DELETE LECTURER MODAL-->
+<div class="modal" tabindex="-1" id="deleteLecturerModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Lecturer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete lecturer: ID:{{deleteLecturer?.lecturerId }} Lecturer Name: {{ deleteLecturer?.firstName }}?</p>
+        <form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="delete-lecturer-modal-close">Close</button>
+            <button type="button" class="btn btn-primary" (click)="onDeleteLecturer(deleteLecturer?.lecturerId)">Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--EDIT LECTURER MODAL-->
+<div class="modal" tabindex="-1" id="editLecturerModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Lecturer: {{ editLecturer?.lecturerId }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #editLecturerForm="ngForm" (ngSubmit)="onUpdateLecturer(editLecturerForm)">
+
+          <div class="mb-3">
+            <label for="updatedLecturerId" class="form-label">Lecturer ID</label>
+            <input type="text" ngModel="{{ editLecturer?.lecturerId}}" pattern = "[0-9]*" name="lecturerId" class="form-control" id="updatedLecturerId"
+                   aria-describedby="basic-addon1" required readonly>
+          </div>
+
+          <div class="mb-3">
+            <label for="updatedLecturerName" class="form-label">Lecturer Name</label>
+            <input type="text" ngModel="{{ editLecturer?.firstName}}" pattern = "[a-zA-Z ]*" name="firstName" class="form-control"
+                   id="updatedLecturerName" aria-describedby="basic-addon1" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="updatedLecturerMiddleName" class="form-label">Lecturer Middle Name</label>
+            <input type="text" ngModel="{{ editLecturer?.middleName}}" pattern = "[a-zA-Z ]*" name="middleName" class="form-control"
+                   id="updatedLecturerMiddleName" aria-describedby="basic-addon1" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="updatedLecturerSurname" class="form-label">Lecturer Surname</label>
+            <input type="text" ngModel="{{ editLecturer?.lastName}}" pattern = "[a-zA-Z ]*" name="lastName" class="form-control"
+                   id="updatedLecturerSurname" aria-describedby="basic-addon1" required>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="updated-lecturer-close-button">
+              Close
+            </button>
+            <button [disabled]="editLecturerForm.form.invalid" type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
