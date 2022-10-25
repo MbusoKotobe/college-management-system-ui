@@ -1,31 +1,88 @@
 <app-navbar></app-navbar>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
+<h2 class="collegeManagementSystemHeading">Faculty Management Area</h2>
+<button (click)="showCreateFacultyModal()" style="margin-left: 4%;" class="btn btn-success" >Add New</button>
+<div class="wrapper">
+  <hr />
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Faculty Name</th>
+        <th scope="col">Faculty Description</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let faculty of faculties; index as i;" (click)="showEditFacultyModal(faculty)">
+        <th scope=i> {{faculty.facultyId}}</th>
+        <td>{{faculty.facultyName}}</td>
+        <td>{{faculty.facultyDescription}}</td>
+        <td>
+          <button (click)="deleteFaculty($event, faculty)" type="button" class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <!-- Create Faculty Modal -->
+  <div class="modal" id="createFacultyModalId" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Faculty Modal</h5>
+          <button (click)="closeCreateFacultyModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="facultyForm" (ngSubmit)="submitFaculty()">
+            <div>
+              <label for="facultyName" class="form-label">Faculty Name</label>
+              <input type="text" formControlName="facultyName" class="form-control" id="facultyNameId"
+                aria-describedby="basic-addon1" required>
+                
+              <label style="margin-top: 4%;" for="facultyDescription" class="form-label">Faculty Description</label>
+              <textarea formControlName="facultyDescription" class="form-control" id="facultyDescriptionId"
+                aria-describedby="basic-addon1" required>
+              </textarea>
+            </div>
+  
+            <div class="modal-footer">
+              <button (click)="closeCreateFacultyModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Faculty Modal -->
+  <div class="modal" id="editFacultyModalId" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Faculty</h5>
+          <button (click)="closeEditFacultyModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editFacultyForm" (ngSubmit)="submitEditFacultyForm()">
+            <div>
+              <label for="facultyName" class="form-label">Faculty Name</label>
+              <input type="text" formControlName="facultyName" class="form-control" id="facultyNameId"
+                aria-describedby="basic-addon1" required>
+                
+              <label style="margin-top: 4%;" for="facultyDescription" class="form-label">Faculty Description</label>
+              <textarea formControlName="facultyDescription" class="form-control" id="facultyDescriptionId"
+                aria-describedby="basic-addon1" required>
+              </textarea>
+            </div>
+  
+            <div class="modal-footer">
+              <button (click)="closeEditFacultyModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
