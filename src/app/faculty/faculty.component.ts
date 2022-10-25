@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { IFaculty } from '../models/IFaculty.model';
 import { FacultyService } from '../services/faculty.service';
+import { ToastrUtility } from '../Utility/toastr-utility.utility';
 //import { IFaculty } from '../models/Faculty.model';
 
 
@@ -15,15 +16,15 @@ export class FacultyComponent implements OnInit {
   facultyForm = new FormGroup(
   {
     facultyId: new FormControl(0),
-    facultyName: new FormControl(),
-    facultyDescription: new FormControl()
+    facultyName: new FormControl(""),
+    facultyDescription: new FormControl("")
   });
 
   editFacultyForm = new FormGroup(
   {
     facultyId: new FormControl(0),
-    facultyName: new FormControl(),
-    facultyDescription: new FormControl()
+    facultyName: new FormControl(""),
+    facultyDescription: new FormControl("!")
   }
   );
 
@@ -36,7 +37,7 @@ export class FacultyComponent implements OnInit {
 
   faculties: Array<IFaculty> = new Array<IFaculty>();
 
-  constructor(private facultyService: FacultyService) 
+  constructor(private facultyService: FacultyService, private toastr: ToastrUtility) 
   { }
 
   ngOnInit(): void 
@@ -53,10 +54,13 @@ export class FacultyComponent implements OnInit {
   {
     this.facultyService.addFaculty(faculty).subscribe(
     {
-      //TODO: Remove console logs.
-      error: (error) => console.error(error),
-      complete: () => console.info("Save Request Successful.")
+      error: (error) => this.toastr.showtoastrError(error, "Request Status"),
+      complete: () => this.toastr.showtoastrSuccess("Save Request Successful.", "Request Status")
     });
+
+    setTimeout(() => {
+      window.location.reload();   
+    }, 1500);
   }
 
   getFaculty(facultyId: number): void
@@ -70,7 +74,7 @@ export class FacultyComponent implements OnInit {
 
     setTimeout(() => { 
       
-    }, 3000);
+    }, 1500);
   }
 
   getFaculties(): void
@@ -84,42 +88,77 @@ export class FacultyComponent implements OnInit {
 
     setTimeout(() => { 
       
-    }, 3000);
+    }, 1500);
   }
 
   removeFaculty(faculty: IFaculty): void
   {
     this.facultyService.removeFaculty(faculty).subscribe(
     {
-      error: (error: any) => console.error(error),
-      complete: () => console.info("Remove Faculty Request Successful.")
+      error: (error: any) => this.toastr.showtoastrError(error, "Request Status"),
     });
+
+    setTimeout(() => {
+      window.location.reload();   
+    }, 1500);
   }
 
-  showCreateFacultyModal()
+  showCreateFacultyModal(): void
   {
     document.getElementById("createFacultyModalId")!.style.display = "block";
   }
 
-  showEditFacultyModal(faculty: IFaculty)
+  closeCreateFacultyModal(): void
+  {
+    document.getElementById("createFacultyModalId")!.style.display = "none";
+  }
+
+  showEditFacultyModal(faculty: IFaculty): void
   {
     document.getElementById("editFacultyModalId")!.style.display = "block";
+    this.setFaculty(faculty);
     this.setUpEditFacultyModal(faculty);
   }
 
-  submitFaculty()
+  closeEditFacultyModal(): void
   {
-    this.faculty.facultyId = 0;
-    this.faculty.facultyName = this.facultyForm.value.facultyName;
-    this.faculty.facultyDescription = this.facultyForm.value.facultyDescription;
+    document.getElementById("editFacultyModalId")!.style.display = "none";
   }
 
-  private setUpEditFacultyModal(faculty: IFaculty)
+  submitFaculty(): void
   {
-    this.facultyForm.patchValue({
+    //this.faculty.facultyId = 0;
+    this.faculty.facultyName = this.facultyForm.value.facultyName!;
+    this.faculty.facultyDescription = this.facultyForm.value.facultyDescription!;
+    this.saveFaculty(this.faculty);  
+  }
+
+  submitEditFacultyForm(): void
+  {
+    this.faculty.facultyName = this.editFacultyForm.value.facultyName!;
+    this.faculty.facultyDescription = this.editFacultyForm.value.facultyDescription!;
+    this.saveFaculty(this.faculty);
+  }
+
+  deleteFaculty($event: any, faculty: IFaculty): void
+  {
+    event?.stopPropagation();
+    this.removeFaculty(faculty);
+  }
+
+  private setUpEditFacultyModal(faculty: IFaculty): void
+  {
+    this.editFacultyForm.patchValue({
       facultyId: faculty.facultyId,
       facultyName: faculty.facultyName,
       facultyDescription: faculty.facultyDescription,
     });
+  }
+
+  private setFaculty(faculty: IFaculty): void
+  {
+    this.faculty.facultyId = faculty.facultyId;
+    this.faculty.facultyName = faculty.facultyName;
+    this.faculty.facultyDescription = faculty.facultyDescription;
   }
 }

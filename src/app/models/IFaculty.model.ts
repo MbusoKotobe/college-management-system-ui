@@ -1,6 +1,6 @@
 export interface IFaculty
 {
-    facultyId: number;
-    facultyName: string;
-    facultyDescription: string;
+    facultyId?: number;
+    facultyName?: string;
+    facultyDescription?: string;
 };
