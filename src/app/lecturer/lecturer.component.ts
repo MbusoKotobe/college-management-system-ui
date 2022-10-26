@@ -18,7 +18,6 @@ export class LecturerComponent implements OnInit {
       middleName: new FormControl(""),
       lastName: new FormControl("")
     });
-
   editLecturerForm = new FormGroup(
     {
       lecturerId: new FormControl(0),
@@ -27,7 +26,6 @@ export class LecturerComponent implements OnInit {
       lastName: new FormControl("")
     }
   );
-
   lecturer: ILecturer =
     {
       lecturerId: 0,
@@ -65,7 +63,7 @@ export class LecturerComponent implements OnInit {
   {
     this.lecturerService.getLecturer(lecturerId).subscribe(
             {
-        next: (respoonse: ILecturer) => this.lecturer = respoonse,
+        next: (response: ILecturer) => this.lecturer = response,
         error: (error: any) => console.error(error),
         complete: () => console.info("Fetch Request Successful.")
       });
@@ -160,7 +158,7 @@ export class LecturerComponent implements OnInit {
   {
     this.lecturer.lecturerId = lecturer.lecturerId;
     this.lecturer.firstName = lecturer.firstName;
-    this.lecturer.firstName = lecturer.firstName;
-    this.lecturer.firstName = lecturer.firstName;
+    this.lecturer.middleName = lecturer.middleName;
+    this.lecturer.middleName = lecturer.firstName;
   }
 }

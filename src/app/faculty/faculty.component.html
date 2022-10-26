@@ -23,7 +23,7 @@
       </tr>
     </tbody>
   </table>
-  
+
   <!-- Create Faculty Modal -->
   <div class="modal" id="createFacultyModalId" tabindex="-1">
     <div class="modal-dialog">
@@ -38,13 +38,13 @@
               <label for="facultyName" class="form-label">Faculty Name</label>
               <input type="text" formControlName="facultyName" class="form-control" id="facultyNameId"
                 aria-describedby="basic-addon1" required>
-                
+
               <label style="margin-top: 4%;" for="facultyDescription" class="form-label">Faculty Description</label>
               <textarea formControlName="facultyDescription" class="form-control" id="facultyDescriptionId"
                 aria-describedby="basic-addon1" required>
               </textarea>
             </div>
-  
+
             <div class="modal-footer">
               <button (click)="closeCreateFacultyModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary">Save changes</button>
@@ -69,15 +69,16 @@
               <label for="facultyName" class="form-label">Faculty Name</label>
               <input type="text" formControlName="facultyName" class="form-control" id="facultyNameId"
                 aria-describedby="basic-addon1" required>
-                
+
               <label style="margin-top: 4%;" for="facultyDescription" class="form-label">Faculty Description</label>
               <textarea formControlName="facultyDescription" class="form-control" id="facultyDescriptionId"
                 aria-describedby="basic-addon1" required>
               </textarea>
             </div>
-  
+
             <div class="modal-footer">
-              <button (click)="closeEditFacultyModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button (click)="closeEditFacultyModal()" type="button" class="btn btn-secondary"
+                      data-bs-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
           </form>
