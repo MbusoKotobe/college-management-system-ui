@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DepartmentComponent } from './department/department.component';
 import { FacultyComponent } from './faculty/faculty.component';
 import {StudentViewComponent} from "./student-view/student-view.component";
 import { LoginComponent } from './login/login.component';
@@ -13,8 +14,9 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'faculty', component: FacultyComponent },
   { path: 'student-view', component: StudentViewComponent},
+  { path: 'department', component: DepartmentComponent },
   { path: 'course', component: CourseComponent },
-  { path: 'module', component: ModulexComponent}
+  { path: 'module', component: ModulexComponent},
 ];
 
 @NgModule({
@@ -22,4 +24,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-export const routingComponents = [ LoginComponent, SignupComponent, FacultyComponent, CourseComponent, ModulexComponent ]
+export const routingComponents = [ LoginComponent, SignupComponent, FacultyComponent, CourseComponent, ModulexComponent, DepartmentComponent, StudentViewComponent ]
+
