@@ -14,11 +14,11 @@
     </thead>
     <tbody>
     <tr *ngFor="let course of courses; index as i;" >
-      <th scope=i (click)="showEditCourseModal(course)" role="button"> {{course.courseId}}</th>
+      <th (click)="showEditCourseModal(course)" role="button"> {{course.courseId}}</th>
       <td>{{course.courseName}}</td>
       <td>{{course.courseDescription}}</td>
       <td>
-        <button (click)="deleteCourse($event, course)" type="button" class="btn btn-danger">Delete</button>
+        <button (click)="showDeleteCourse(course)" type="button" class="btn btn-danger">Delete</button>
       </td>
       <td>
         <button type="button" class="btn btn-secondary" (click)="showViewCourseDetails(course)">View Details</button>
@@ -108,6 +108,27 @@
       </div>
       <div class="modal-footer">
         <button (click)="closeViewCourseDetails()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Delete modal-->
+<div class="modal" tabindex="-1" id="deleteCourseModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Course</h5>
+        <button (click)="closeDeleteCourseDetails()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete employee: ID: {{course.courseId }} Name: {{ course.courseName }}</p>
+        <form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeDeleteCourseDetails()" data-bs-dismiss="modal" id="delete-employee-modal-close">Close</button>
+            <button type="button" class="btn btn-primary" (click)="deleteCourse($event, course)">Delete</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

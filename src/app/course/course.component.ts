@@ -97,7 +97,7 @@ export class CourseComponent implements OnInit {
   removeCourse(course: ICourse): void {
     this.courseService.deleteCourse(course.courseId).subscribe(
       {
-        error: (error: any) => this.toastr.showtoastrError(error, "Request Status"),
+        error: (error: any) => this.toastr.showtoastrError("Unable to delete course", "Request Status"),
       });
 
     setTimeout(() => {
@@ -132,7 +132,14 @@ export class CourseComponent implements OnInit {
     document.getElementById("viewCourseDetails")!.style.display = "none";
   }
 
+  showDeleteCourse(course: ICourse): void {
+    document.getElementById("deleteCourseModal")!.style.display = "block";
+    this.setCourse(course);
+  }
 
+  closeDeleteCourseDetails(): void {
+    document.getElementById("deleteCourseModal")!.style.display = "none";
+  }
 
   submitCourse(): void {
 
