@@ -18,6 +18,7 @@ export class LecturerComponent implements OnInit {
       middleName: new FormControl(""),
       lastName: new FormControl("")
     });
+    
   editLecturerForm = new FormGroup(
     {
       lecturerId: new FormControl(0),
@@ -33,6 +34,14 @@ export class LecturerComponent implements OnInit {
       middleName: "",
       lastName: ""
     }
+
+  lecturerToUpdate: ILecturer =
+  {
+    lecturerId: 0,
+    firstName: "",
+    middleName: "",
+    lastName: ""
+  }
 
   lecturers: Array<ILecturer> = new Array<ILecturer>();
 
@@ -89,7 +98,7 @@ export class LecturerComponent implements OnInit {
 
   removeLecturer(lecturer: ILecturer): void
   {
-    this.lecturerService.removeLecturer(lecturer).subscribe(
+    this.lecturerService.removeLecturer(lecturer.lecturerId!).subscribe(
       {
         error: (error: any) => this.toastr.showtoastrError(error, "Request Status"),
       });
@@ -111,6 +120,7 @@ export class LecturerComponent implements OnInit {
 
   showEditLecturerModal(lecturer: ILecturer): void
   {
+    this.lecturerToUpdate = lecturer;
     document.getElementById("editLecturerModalId")!.style.display = "block";
     this.setLecturer(lecturer);
     this.setUpEditLecturerModal(lecturer);
@@ -132,10 +142,10 @@ export class LecturerComponent implements OnInit {
 
   submitEditLecturerForm(): void
   {
-    this.lecturer.firstName = this.editLecturerForm.value.firstName!;
-    this.lecturer.middleName = this.editLecturerForm.value.middleName!;
-    this.lecturer.lastName = this.editLecturerForm.value.lastName!;
-    this.saveLecturer(this.lecturer);
+    this.lecturerToUpdate.firstName = this.editLecturerForm.value.firstName!;
+    this.lecturerToUpdate.middleName = this.editLecturerForm.value.middleName!;
+    this.lecturerToUpdate.lastName = this.editLecturerForm.value.lastName!;
+    this.saveLecturer(this.lecturerToUpdate);
   }
 
   deleteLecturer($event: any, lecturer: ILecturer): void

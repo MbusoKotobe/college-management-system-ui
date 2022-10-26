@@ -8,7 +8,7 @@ import { HttpHeaders } from "@angular/common/http";
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'Basic ' + btoa('lecturer-admin:721087c4-0ede-407e-8c1f-ac57e531f293')
+    'Authorization': 'Basic ' + btoa('lecturer-admin:721087c4-0ede-407e-8c1f-ac57e531f303')
   })
 };
 
@@ -34,14 +34,8 @@ export class LecturerService {
     return this.http.get<ILecturer[]>(`${this.apiServiceUrl}lecturer/find-all`, httpOptions);
   }
 
-  removeLecturer(shift: ILecturer): any
+  removeLecturer(lecturerId: number): any
   {
-    return this.http.delete<any>(`${this.apiServiceUrl}lecturer/delete`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + btoa('lecturer-admin:721087c4-0ede-407e-8c1f-ac57e531f293')
-      }),
-      body: shift,
-    });
+    return this.http.delete<any>(`${this.apiServiceUrl}lecturer/delete/${lecturerId}`, httpOptions);
   }
 }
