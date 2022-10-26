@@ -1,3 +1,5 @@
+// Author: Jody Kearns (209023651)
+// Date: 10 October 2022
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {ICourse} from "../models/ICourse.model";
@@ -90,7 +92,6 @@ export class CourseComponent implements OnInit {
       });
 
     setTimeout(() => {
-
     }, 1500);
   }
 
