@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {IModule} from "../models/IModule.model";
-<<<<<<< HEAD
-=======
 import {IFaculty} from "../models/IFaculty.model";
->>>>>>> b1dd850dba7f67854722a615b8b9a34518c6bdf0
 import {Observable} from "rxjs";
 
 
