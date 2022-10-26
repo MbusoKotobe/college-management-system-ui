@@ -1,0 +1,94 @@
+<app-navbar></app-navbar>
+<h2 class="collegeManagementSystemHeading">Module Management Area</h2>
+<button (click)="showCreateModuleModal()" style="margin-left: 4%;" class="btn btn-success" >Add New</button>
+<div class="wrapper">
+  <hr />
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Module ID</th>
+      <th scope="col">Module Name</th>
+      <th scope="col">Module Description</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let module of modules; index as i;" (click)="showEditModuleModal(modulex)">
+      <th scope=i> {{modulex.moduleId}}</th>
+      <td>{{modulex.moduleName}}</td>
+      <td>{{modulex.moduleDescription}}</td>
+      <td>
+        <button (click)="deleteModulex($event, modulex)" type="button" class="btn btn-danger">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Create Module Modal -->
+  <div class="modal" id="createModuleModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Module Modal</h5>
+          <button (click)="closeCreateModuleModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="moduleForm" (ngSubmit)="submitModulex()">
+            <div>
+              <label for="moduleId" class="form-label">Module ID</label>
+              <input type="text" formControlName="moduleId" class="form-control" id="moduleId"
+                     aria-describedby="basic-addon1" required>
+
+              <label for="moduleName" class="form-label">Module Name</label>
+              <input type="text" formControlName="moduleName" class="form-control" id="moduleName"
+                     aria-describedby="basic-addon1" required>
+
+              <label style="margin-top: 4%;" for="moduleDescription" class="form-label">Module Description</label>
+              <textarea formControlName="moduleDescription" class="form-control" id="moduleDescription"
+                        aria-describedby="basic-addon1" required>
+              </textarea>
+            </div>
+            <div class="modal-footer">
+              <button (click)="closeCreateModuleModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Edit Module Modal -->
+  <div class="modal" id="editModuleModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Module</h5>
+          <button (click)="closeEditModuleModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editModuleForm" (ngSubmit)="submitEditModuleForm()">
+            <div>
+              <label for="moduleId" class="form-label">Module ID</label>
+              <input type="text" formControlName="moduleId" class="form-control" id="moduleIdId"
+                     aria-describedby="basic-addon1" required>
+
+              <label for="moduleName" class="form-label">Module Name</label>
+              <input type="text" formControlName="moduleName" class="form-control" id="moduleNameId"
+                     aria-describedby="basic-addon1" required>
+
+              <label style="margin-top: 4%;" for="moduleDescription" class="form-label">Module Description</label>
+              <textarea formControlName="facultyDescription" class="form-control" id="moduleDescriptionId"
+                        aria-describedby="basic-addon1" required>
+              </textarea>
+            </div>
+            <div class="modal-footer">
+              <button (click)="closeEditModuleModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
