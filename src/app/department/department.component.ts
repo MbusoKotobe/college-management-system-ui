@@ -79,7 +79,7 @@ export class DepartmentComponent implements OnInit
 
     setTimeout(() =>
     {
-      //window.location.reload();
+      window.location.reload();
     }, 1800);
   }
 
