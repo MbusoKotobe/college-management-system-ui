@@ -4,6 +4,8 @@ import { DepartmentComponent } from './department/department.component';
 import { FacultyComponent } from './faculty/faculty.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import {CourseComponent} from "./course/course.component";
+import {ModulexComponent} from "./modulex/modulex.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'faculty', pathMatch: 'full' },
@@ -11,6 +13,8 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'faculty', component: FacultyComponent },
   { path: 'department', component: DepartmentComponent }
+  { path: 'course', component: CourseComponent },
+  { path: 'module', component: ModulexComponent}
 ];
 
 @NgModule({
@@ -18,8 +22,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-export const routingComponents = [ 
-  LoginComponent, SignupComponent, FacultyComponent,DepartmentComponent
- ]
-
+export const routingComponents = [ LoginComponent, SignupComponent, FacultyComponent, CourseComponent, ModulexComponent, DepartmentComponent ]
 
