@@ -14,12 +14,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let module of modules; index as i;" (click)="showEditModuleModal(modulex)">
-      <th scope=i> {{modulex.moduleId}}</th>
-      <td>{{modulex.moduleName}}</td>
-      <td>{{modulex.moduleDescription}}</td>
+    <tr *ngFor="let module of modules; index as i;" (click)="showEditModuleModal(module)">
+      <th scope=i> {{i + 1}}</th>
+      <td>{{module.moduleId}}</td>
+      <td>{{module.moduleName}}</td>
+      <td>{{module.moduleDescription}}</td>
       <td>
-        <button (click)="deleteModulex($event, modulex)" type="button" class="btn btn-danger">Delete</button>
+        <button (click)="deleteModulex($event, module)" type="button" class="btn btn-danger">Delete</button>
       </td>
     </tr>
     </tbody>
@@ -69,8 +70,8 @@
         <div class="modal-body">
           <form [formGroup]="editModuleForm" (ngSubmit)="submitEditModuleForm()">
             <div>
-              <label for="moduleId" class="form-label">Module ID</label>
-              <input type="text" formControlName="moduleId" class="form-control" id="moduleIdId"
+              <label for="moduleId" class="form-label"></label>
+              <input type="hidden" formControlName="moduleId" class="form-control" id="moduleIdId"
                      aria-describedby="basic-addon1" required>
 
               <label for="moduleName" class="form-label">Module Name</label>
@@ -78,7 +79,7 @@
                      aria-describedby="basic-addon1" required>
 
               <label style="margin-top: 4%;" for="moduleDescription" class="form-label">Module Description</label>
-              <textarea formControlName="facultyDescription" class="form-control" id="moduleDescriptionId"
+              <textarea formControlName="moduleDescription" class="form-control" id="moduleDescriptionId"
                         aria-describedby="basic-addon1" required>
               </textarea>
             </div>

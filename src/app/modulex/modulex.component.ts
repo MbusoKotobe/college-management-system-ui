@@ -25,7 +25,7 @@ export class ModulexComponent implements OnInit {
     {
       moduleId: new FormControl(""),
       moduleName: new FormControl(""),
-      moduleDescription: new FormControl("!")
+      moduleDescription: new FormControl("")
     }
   );
 
@@ -36,22 +36,27 @@ export class ModulexComponent implements OnInit {
       moduleDescription: ""
     }
 
+  moduleToUpdate: IModule = {
+    moduleId: "",
+    moduleName: "",
+    moduleDescription: ""
+  }
+
   constructor(private moduleService: ModuleService, private toastr: ToastrUtility) {
   }
 
   ngOnInit(): void {
-
     this.getModules();
   }
 
-  fetchModules(): void {
-    throw new Error('Method not implemented.');
-  }
 
   saveModulex(modulex: IModule): void {
     this.moduleService.addModulex(modulex).subscribe(
       {
-        error: (error) => this.toastr.showtoastrError(error, "Request Status"),
+        error: (error) => {
+          this.toastr.showtoastrError(error, "Request Status");
+          console.log(error);
+        },
         complete: () => this.toastr.showtoastrSuccess("Save Request Successful.", "Request Status")
       });
 
@@ -88,7 +93,7 @@ export class ModulexComponent implements OnInit {
 
   removeModulex(modulex: IModule): void
   {
-    this.moduleService.removeModulex(modulex).subscribe(
+    this.moduleService.removeModulex(modulex.moduleId).subscribe(
       {
         error: (error: any) => this.toastr.showtoastrError(error, "Request Status"),
       });
@@ -107,6 +112,7 @@ export class ModulexComponent implements OnInit {
   }
 
   showEditModuleModal(modulex: IModule): void {
+    this.moduleToUpdate = modulex;
     document.getElementById("editModuleModal")!.style.display = "block";
     this.setModulex(modulex);
     this.setUpModuleModal(modulex);
@@ -117,24 +123,26 @@ export class ModulexComponent implements OnInit {
   }
 
   submitModulex(): void {
-    this.modulex.moduleId = "";
+    this.modulex.moduleId = this.moduleForm.value.moduleId!;
     this.modulex.moduleName = this.moduleForm.value.moduleName!;
     this.modulex.moduleDescription = this.moduleForm.value.moduleDescription!;
     this.saveModulex(this.modulex);
   }
+  
   submitEditModuleForm(): void
   {
-    this.modulex.moduleId = this.editModuleForm.value.moduleId!;
-    this.modulex.moduleName = this.editModuleForm.value.moduleName!;
-    this.modulex.moduleDescription = this.editModuleForm.value.moduleDescription!;
-    this.saveModulex(this.modulex);
+    this.moduleToUpdate.moduleName = this.editModuleForm.value.moduleName!;
+    this.moduleToUpdate.moduleDescription = this.editModuleForm.value.moduleDescription!;
+    this.saveModulex(this.moduleToUpdate);
   }
+  
   deleteModulex($event: any, modulex: IModule): void {
     event?.stopPropagation();
     this.removeModulex(modulex);
   }
 
   private setUpModuleModal (modulex: IModule): void {
+    console.log(modulex);
     this.editModuleForm.patchValue({
       moduleId: modulex.moduleId,
       moduleName: modulex.moduleName,
@@ -142,7 +150,7 @@ export class ModulexComponent implements OnInit {
     });
   }
 
-  private  setModulex (modulex: IModule): void {
+  private setModulex (modulex: IModule): void {
     this.modulex.moduleId = modulex.moduleId;
     this.modulex.moduleName = modulex.moduleName;
     this.modulex.moduleDescription = modulex.moduleDescription;
