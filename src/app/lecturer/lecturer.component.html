@@ -1,29 +1,27 @@
 <app-navbar></app-navbar>
-<div class="container pt-4" id="main-container-lecturer">
   <h2 class="collegeSysHeading">Lecturer Management Page</h2>
-  <button type="button" class="btn btn-success" (click)="onOpenModalLecturer(null, 'add')">Add new</button>
-  <hr>
+<button (click)="showCreateLecturerModal()" style="margin-left: 4%;" class="btn btn-success" >Add New</button>
+<div class="wrapper">
+<hr>
   <table class="table">
   <thead>
   <tr>
     <th scope="col">#</th>
-    <th scope="col">lecturerId</th>
-    <th scope="col">firstName</th>
-    <th scope="col">middleName</th>
-    <th scope="col">lastName</th>
-    <th scope="col"></th>
+    <th scope="col">Lecturer Id</th>
+    <th scope="col">First Name</th>
+    <th scope="col">Middle Name</th>
+    <th scope="col">Last Name</th>
     <th scope="col"></th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let lecturer of lecturer; let i = index">
-    <th scope="row">{{i + 1}}</th>
-    <td><span class="link-primary" role="button" (click)="onOpenModalLecturer(lecturer, 'edit')">{{ lecturer.lecturerId }}</span></td>
+  <tr *ngFor="let lecturer of lecturers; index as i;" (click)="showEditLecturerModal(lecturer)">
+    <th scope=i>{{lecturer.lecturerId}}</th>
     <td>{{ lecturer.firstName }}</td>
     <td>{{ lecturer.middleName }}</td>
     <td>{{ lecturer.lastName }}</td>
     <td>
-      <button type="button" class="btn btn-danger" (click)="onOpenModalLecturer(lecturer, 'delete')">Delete</button>
+      <button (click)="deleteLecturer($event, lecturer)" type="button" class="btn btn-danger">Delete</button>
     </td>
   </tr>
   </tbody>
@@ -36,10 +34,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Add Lecturer</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button (click)="closeCreateLecturerModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form #addLecturerForm="ngForm" (ngSubmit)="onAddLecturer(addLecturerForm)">
+        <form [formGroup]="lecturerForm" (ngSubmit)="submitLecturer()">
 
           <div class="mb-3">
             <label for="lecturerId" class="form-label">Lecturer Id</label>
@@ -66,9 +64,10 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="lecturer-close-button">Close
+            <button (click)="closeCreateLecturerModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="lecturer-close-button">Close
             </button>
-            <button [disabled]="addLecturerForm.form.invalid" type="submit" class="btn btn-primary">Save</button>
+            <button [disabled]="addLecturerForm.form.invalid" type="submit" class="btn btn-primary">Save changes</button>
+<!--            <button type="submit" class="btn btn-primary">Save changes</button>-->
           </div>
         </form>
       </div>
@@ -103,10 +102,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Update Lecturer: {{ editLecturer?.lecturerId }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button (click)="closeEditLecturerModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form #editLecturerForm="ngForm" (ngSubmit)="onUpdateLecturer(editLecturerForm)">
+        <form [formGroup]="editLecturerForm" (ngSubmit)="submitUpdateLecturerForm()">
 
           <div class="mb-3">
             <label for="updatedLecturerId" class="form-label">Lecturer ID</label>
@@ -133,7 +132,7 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="updated-lecturer-close-button">
+            <button (click)="closeEditLecturerModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="updated-lecturer-close-button">
               Close
             </button>
             <button [disabled]="editLecturerForm.form.invalid" type="submit" class="btn btn-primary">Save changes</button>

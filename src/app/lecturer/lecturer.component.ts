@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Lecturer} from "../models/lecturer.model";
-import {HttpErrorResponse} from "@angular/common/http";
+import { FormControl, FormGroup } from '@angular/forms';
+import {ILecturer} from "../models/ILecturer.model";
 import {LecturerService} from "../services/lecturer.service";
-import {NgForm} from "@angular/forms";
+import { ToastrUtility } from '../Utility/toastr-utility.utility';
 
 @Component({
   selector: 'app-lecturer',
@@ -11,84 +11,156 @@ import {NgForm} from "@angular/forms";
 })
 export class LecturerComponent implements OnInit {
 
-  public lecturer: Lecturer[];
-  public deleteLecturer: Lecturer;
-  public editLecturer: Lecturer;
+  lecturerForm = new FormGroup(
+    {
+      lecturerId: new FormControl(0),
+      firstName: new FormControl(""),
+      middleName: new FormControl(""),
+      lastName: new FormControl("")
+    });
 
-  constructor(private lecturerService: LecturerService) { }
+  editLecturerForm = new FormGroup(
+    {
+      lecturerId: new FormControl(0),
+      firstName: new FormControl(""),
+      middleName: new FormControl(""),
+      lastName: new FormControl("")
+    }
+  );
+
+  lecturer: ILecturer =
+    {
+      lecturerId: 0,
+      firstName: "",
+      middleName: "",
+      lastName: ""
+    }
+
+  lecturers: Array<ILecturer> = new Array<ILecturer>();
+
+  constructor(private lecturerService: LecturerService, private toastr: ToastrUtility)
+  { }
 
   ngOnInit(): void {
     this.getLecturers();
   }
 
-  public getLecturers(): void {
+  fetchLecturers(): void {
+    throw new Error('Method not implemented.');
+  }
+  saveLecturer(lecturer: ILecturer): void
+  {
+    this.lecturerService.addLecturer(lecturer).subscribe(
+      {
+        error: (error) => this.toastr.showtoastrError(error, "Request Status"),
+        complete: () => this.toastr.showtoastrSuccess("Save Request Successful.", "Request Status")
+      });
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
+  }
+
+  getLecturer(lecturerId: number): void
+  {
+    this.lecturerService.getLecturer(lecturerId).subscribe(
+            {
+        next: (respoonse: ILecturer) => this.lecturer = respoonse,
+        error: (error: any) => console.error(error),
+        complete: () => console.info("Fetch Request Successful.")
+      });
+
+    setTimeout(() => {
+
+    }, 1500);
+  }
+
+  getLecturers(): void
+  {
     this.lecturerService.getLecturers().subscribe(
-      (response: Lecturer[]) => {
-        this.lecturer = response;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message)
-      }
-    )
+      {
+        next: (response: ILecturer[]) => this.lecturers = response,
+        error: (error: any) => console.error(error),
+        complete: () => console.info("Fetch Lecturers Request Successful.")
+      });
+
+    setTimeout(() => {
+
+    }, 1500);
   }
 
-  public onAddLecturer(addLecturerForm: NgForm): void {
-    document.getElementById('lecturer-close-button').click();
-    this.lecturerService.addLecturer(addLecturerForm.value).subscribe(
-      (response: Lecturer) => {
-        this.getLecturers();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message)
-      }
-    );
-    addLecturerForm.reset();
+  removeLecturer(lecturer: ILecturer): void
+  {
+    this.lecturerService.removeLecturer(lecturer).subscribe(
+      {
+        error: (error: any) => this.toastr.showtoastrError(error, "Request Status"),
+      });
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   }
 
-
-  public onOpenModalLecturer(lecturer: Lecturer, mode: number): void {
-    const container = document.getElementById('main-container-lecturer')
-    const buttonLecturer = document.createElement('button');
-    buttonLecturer.type = 'button';
-    buttonLecturer.style.display = 'none';
-    buttonLecturer.setAttribute("data-bs-toggle", 'modal');
-    if (mode === 'add') {
-      buttonLecturer.setAttribute("data-bs-target", '#addLecturerModal');
-    }
-    if (mode === 'edit') {
-      this.editLecturer = lecturer;
-      buttonLecturer.setAttribute("data-bs-target", '#editLecturerModal');
-    }
-    if (mode === 'delete') {
-      this.deleteLecturer = lecturer;
-      buttonLecturer.setAttribute("data-bs-target", '#deletePatientModal');
-    }
-
-    container.appendChild(buttonLecturer);
-    buttonLecturer.click();
+  showCreateLecturerModal(): void
+  {
+    document.getElementById("createLecturerModalId")!.style.display = "block";
   }
 
-
-  public onDeleteLecturer(lecturerId: number): void {
-    document.getElementById('delete-lecturer-modal-close').click();
-    this.lecturerService.deleteLecturer(lecturerId).subscribe(
-      (response: void) => {
-        this.getLecturers();
-      },
-      (error: HttpErrorResponse) => {
-      }
-    );
+  closeCreateLecturerModal(): void
+  {
+    document.getElementById("createLecturerModalId")!.style.display = "none";
   }
 
-  public onUpdateLecturer(editLecturerForm: NgForm): void {
-    document.getElementById('updated-lecturer-close-button').click();
-    this.lecturerService.addLecturer(editLecturerForm.value).subscribe(
-      (response: Lecturer) => {
-        this.getLecturers();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message)
-      }
-    );
+  showEditLecturerModal(lecturer: ILecturer): void
+  {
+    document.getElementById("editLecturerModalId")!.style.display = "block";
+    this.setLecturer(lecturer);
+    this.setUpEditLecturerModal(lecturer);
+  }
+
+  closeEditLecturerModal(): void
+  {
+    document.getElementById("editLecturerModalId")!.style.display = "none";
+  }
+
+  submitLecturer(): void
+  {
+    this.lecturer.lecturerId = 0;
+    this.lecturer.firstName = this.lecturerForm.value.firstName!;
+    this.lecturer.middleName = this.lecturerForm.value.middleName!;
+    this.lecturer.lastName = this.lecturerForm.value.lastName!;
+    this.saveLecturer(this.lecturer);
+  }
+
+  submitEditLecturerForm(): void
+  {
+    this.lecturer.firstName = this.editLecturerForm.value.firstName!;
+    this.lecturer.middleName = this.editLecturerForm.value.middleName!;
+    this.lecturer.lastName = this.editLecturerForm.value.lastName!;
+    this.saveLecturer(this.lecturer);
+  }
+
+  deleteLecturer($event: any, lecturer: ILecturer): void
+  {
+    event?.stopPropagation();
+    this.removeLecturer(lecturer);
+  }
+
+  private setUpEditLecturerModal(lecturer: ILecturer): void
+  {
+    this.editLecturerForm.patchValue({
+      lecturerId: lecturer.lecturerId,
+      firstName: lecturer.firstName,
+      middleName: lecturer.middleName,
+      lastName: lecturer.lastName
+    });
+  }
+
+  private setLecturer(lecturer: ILecturer): void
+  {
+    this.lecturer.lecturerId = lecturer.lecturerId;
+    this.lecturer.firstName = lecturer.firstName;
+    this.lecturer.firstName = lecturer.firstName;
+    this.lecturer.firstName = lecturer.firstName;
   }
 }

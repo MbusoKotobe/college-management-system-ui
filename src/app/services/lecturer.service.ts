@@ -1,32 +1,47 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Lecturer} from "../models/lecturer.model";
-import {environment} from "../../environments/environment";
+import {environment} from "src/environments/environment";
+import {ILecturer} from "../models/ILecturer.model";
+import { HttpHeaders } from "@angular/common/http";
 
-@Injectable({
-  providedIn: 'root'
-})
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': 'Basic ' + btoa('lecturer-admin:721087c4-0ede-407e-8c1f-ac57e531f293')
+  })
+};
+
+@Injectable({ providedIn: 'root' })
 export class LecturerService {
-
-  private apiServerUrl = environment.apiBaseUrl;
+  private apiServiceUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {
   }
 
-  public getLecturers(): Observable<Lecturer[]> {
-    return this.http.get<Lecturer[]>(`${this.apiServerUrl}lecturer/read-all`)
+  addLecturer(lecturer: ILecturer): Observable<ILecturer>
+  {
+    return this.http.post<any>(`${this.apiServiceUrl}lecturer/save`, lecturer, httpOptions);
   }
 
-  public addLecturer(lecturer: Lecturer): Observable<Lecturer> {
-    return this.http.post<Lecturer>(`${this.apiServerUrl}lecturer/save`,lecturer)
+  getLecturer(lecturerId: number): Observable<ILecturer>
+  {
+    return this.http.get<ILecturer>(`${this.apiServiceUrl}lecturer/read/lecturerId=${lecturerId}`, httpOptions);
   }
 
-  public readLecturer(lecturerId: string): Observable<Lecturer> {
-    return this.http.get<Lecturer>(`${this.apiServerUrl}lecturer/read/${lecturerId}`)
+  getLecturers(): any
+  {
+    return this.http.get<ILecturer[]>(`${this.apiServiceUrl}lecturer/find-all`, httpOptions);
   }
 
-  public deleteLecturer(lecturerId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}lecturer/delete/${lecturerId}`)
+  removeLecturer(shift: ILecturer): any
+  {
+    return this.http.delete<any>(`${this.apiServiceUrl}lecturer/delete`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + btoa('lecturer-admin:721087c4-0ede-407e-8c1f-ac57e531f293')
+      }),
+      body: shift,
+    });
   }
 }
