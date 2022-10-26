@@ -9,7 +9,7 @@ import { HttpHeaders } from "@angular/common/http";
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'Basic ' + btoa('student-admin:721087c4-0ede-407e-8c1f-ac57e531f293')
+    'Authorization': 'Basic ' + btoa('student-admin:721087c4-0ede-407e-8c1f-ac57e531f295')
   })
 };
 
@@ -28,7 +28,7 @@ export class StudentServices
 
   getStudent(studentNumber: number): Observable<IStudent>
   {
-    return this.http.get<IStudent>(`${this.apiServiceUrl}student/read/studentNumber=${studentNumber}`, httpOptions);
+    return this.http.get<IStudent>(`${this.apiServiceUrl}student/read/firstName=${studentNumber}`, httpOptions);
   }
 
   getStudents(): any
@@ -36,14 +36,9 @@ export class StudentServices
     return this.http.get<IStudent[]>(`${this.apiServiceUrl}student/find-all`, httpOptions);
   }
 
-  removeStudent(shift: IStudent): any
+  removeStudent(studentId: number): any
   {
-    return this.http.delete<any>(`${this.apiServiceUrl}student/delete`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + btoa('student-admin:721087c4-0ede-407e-8c1f-ac57e531f293')
-      }),
-      body: shift,
-    });
+    return this.http.delete<void>(`${this.apiServiceUrl}student/delete/${studentId}`, httpOptions)
+
   }
 }

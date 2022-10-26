@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {FormControl, FormGroup, ValidationErrors, Validator, Validators} from '@angular/forms';
 import { IStudent } from '../models/IStudent.model';
 import { StudentServices } from '../services/student.services';
 import { ToastrUtility } from '../Utility/toastr-utility.utility';
+
 
 
 @Component({
@@ -14,10 +15,10 @@ export class StudentViewComponent implements OnInit {
 
   studentForm = new FormGroup(
     {
-      firstName: new FormControl(""),
-      middleName: new FormControl(""),
-      lastName: new FormControl(""),
-      studentNumber: new FormControl(0)
+      firstName: new FormControl( ),
+      middleName: new FormControl(),
+      lastName: new FormControl(),
+      studentNumber: new FormControl()
     });
 
   editStudentForm = new FormGroup(
@@ -25,7 +26,7 @@ export class StudentViewComponent implements OnInit {
       firstName: new FormControl(""),
       middleName: new FormControl(""),
       lastName: new FormControl(""),
-      studentNumber: new FormControl(0)
+      studentNumber: new FormControl()
     }
   );
 
@@ -38,6 +39,7 @@ export class StudentViewComponent implements OnInit {
     }
 
   students: Array<IStudent> = new Array<IStudent>();
+
 
   constructor(private studentService: StudentServices, private toastr: ToastrUtility)
   { }
@@ -95,13 +97,13 @@ export class StudentViewComponent implements OnInit {
 
   removeStudent(student: IStudent): void
   {
-    this.studentService.removeStudent(student).subscribe(
+    this.studentService.removeStudent(student.studentNumber!).subscribe(
       {
         error: (error: any) => this.toastr.showtoastrError(error, "Request Status"),
       });
 
     setTimeout(() => {
-      window.location.reload();
+       window.location.reload();
     }, 1500);
   }
 
@@ -129,10 +131,10 @@ export class StudentViewComponent implements OnInit {
 
   submitStudent(): void
   {
-    //this.student.studentNumber = 0;
     this.student.firstName = this.studentForm.value.firstName!;
-    //this.student.middleName = this.studentForm.value.middleName!;
+    this.student.middleName = this.studentForm.value.middleName!;
     this.student.lastName = this.studentForm.value.lastName!;
+    this.student.studentNumber = this.studentForm.value.studentNumber!;
     this.saveStudent(this.student);
   }
 
@@ -140,7 +142,8 @@ export class StudentViewComponent implements OnInit {
   {
     this.student.firstName = this.editStudentForm.value.firstName!;
     this.student.middleName = this.editStudentForm.value.middleName!;
-    this.student.lastName = this.studentForm.value.lastName!;
+    this.student.lastName = this.editStudentForm.value.lastName!;
+    //this.student.studentNumber = this.studentForm.value.studentNumber!;
     this.saveStudent(this.student);
   }
 

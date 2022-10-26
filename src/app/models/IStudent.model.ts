@@ -1,7 +1,7 @@
 export interface IStudent
 {
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  studentNumber: number;
+  firstName?: string;
+  middleName?: string;
+  lastName?: string;
+  studentNumber?: number;
 };

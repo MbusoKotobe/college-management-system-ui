@@ -3,7 +3,7 @@
 <h2 class="collegeManagementSystemHeading">Student Management Area</h2>
 <button (click)="showCreateStudentModal()" style="margin-left: 4%;" class="btn btn-success" >Add New</button>
 <div class="wrapper">
-  <hr />
+  <hr/>
   <table class="table">
     <thead>
     <tr>
@@ -17,10 +17,11 @@
     </thead>
     <tbody>
     <tr *ngFor="let student of students; index as i;" (click)="showEditStudentModal(student)">
-      <th scope=i> {{}}</th>
+      <th scope=i> {{i + 1}}</th>
       <td>{{student.firstName}}</td>
       <td>{{student.middleName}}</td>
       <td>{{student.lastName}}</td>
+      <td>{{student.studentNumber}}</td>
       <td>
         <button (click)="deleteStudent($event, student)" type="button" class="btn btn-danger">Delete</button>
       </td>
@@ -44,7 +45,7 @@
                      aria-describedby="basic-addon1" required>
 
               <label for="middleName" class="form-label">Middle Name</label>
-              <input type="text"  formControlName="middleName" class="form-control" id="middleName"
+              <input type="text" formControlName="middleName" class="form-control" id="middleName"
                         aria-describedby="basic-addon1" required>
 
               <label for="lastName" class="form-label">Last Name</label>
@@ -59,7 +60,7 @@
 
             <div class="modal-footer">
               <button (click)="closeCreateStudentModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
+              <button type="submit" class="btn btn-primary">Save</button>
             </div>
           </form>
         </div>
@@ -72,23 +73,28 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Edit Faculty</h5>
+          <h5 class="modal-title">Edit Student</h5>
           <button (click)="closeEditStudentModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form [formGroup]="editStudentForm" (ngSubmit)="submitEditStudentForm()">
             <div>
               <label for="firstName" class="form-label">First Name</label>
-              <input type="text" formControlName="firstName" class="form-control" id="firstName"
+              <input type="text" formControlName="firstName" class="form-control" id="firstNameId"
                      aria-describedby="basic-addon1" required>
 
               <label for="middleName" class="form-label">Middle Name</label>
-              <input type="text"  formControlName="middleName" class="form-control" id="middleName"
+              <input type="text"  formControlName="middleName" class="form-control" id="middleNameId"
                      aria-describedby="basic-addon1" required>
 
               <label for="lastName" class="form-label">Last Name</label>
-              <input type="text" formControlName="lastName" class="form-control" id="lastName"
+              <input type="text" formControlName="lastName" class="form-control" id="lastNameId"
                      aria-describedby="basic-addon1" required>
+
+              <label for="studentNumber" class="form-label"></label>
+              <input type="hidden" formControlName="studentNumber" class="form-control" id="studentNumberId"
+                     aria-describedby="basic-addon1" required>
+
             </div>
 
             <div class="modal-footer">
