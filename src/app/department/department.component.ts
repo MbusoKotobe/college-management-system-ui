@@ -21,7 +21,7 @@ export class DepartmentComponent implements OnInit {
     departmentId: new FormControl(0),
     departmentName: new FormControl(""),
     departmentDescription: new FormControl(""),
-    faculty: new FormControl("")
+    faculty: new FormControl(new Object())
   });
 
   editDepartmentForm = new FormGroup(
@@ -30,7 +30,7 @@ export class DepartmentComponent implements OnInit {
     departmentId: new FormControl(0),
     departmentName: new FormControl(""),
     departmentDescription: new FormControl("!"),
-     faculty: new FormControl("")
+    faculty: new FormControl(new Object())
   }
   );
 
@@ -54,6 +54,7 @@ export class DepartmentComponent implements OnInit {
   ngOnInit(): void
   {
     this.getDepartments();
+    this.fetchFaculties();
   }
 
   fetchFaculties(): void
@@ -141,6 +142,7 @@ export class DepartmentComponent implements OnInit {
 
     this.department.departmentName = this.departmentForm.value.departmentName!;
     this.department.departmentDescription = this.departmentForm.value.departmentDescription!;
+    this.department.faculty = this.department.value.faculty;
     this.saveDepartment(this.department);
   }
 
@@ -148,7 +150,9 @@ export class DepartmentComponent implements OnInit {
   {
     this.department.departmentName = this.editDepartmentForm.value.departmentName!;
     this.department.departmentDescription = this.editDepartmentForm.value.departmentDescription!;
+    this.department.faculty = this.editDepartmentForm.value.faculty;
     this.saveDepartment(this.department);
+
   }
 
   deleteDepartment($event: any, department: IDepartment): void

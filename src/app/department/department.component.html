@@ -48,7 +48,7 @@
             <div class="mb-3">
               <label style="margin-top: 4%;" for="departmentDescription" class="form-label">Faculty</label>
               <select [(ngModel)]="faculties" formControlName="faculty" class="form-select" aria-label="Default select example" id="facultyId" required>
-                <option *ngFor="let faculty of faculties" [ngValue]="faculty">{{ faculty.name }} </option>
+                <option *ngFor="let faculty of faculties" [ngValue]="faculty">{{ faculty.facultyName }} </option>
               </select>
             </div>
 
