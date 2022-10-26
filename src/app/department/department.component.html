@@ -1,4 +1,8 @@
 <app-navbar></app-navbar>
+<h2 class="collegeManagementSystemHeading">Departments Management Area</h2>
+<button (click)="showCreateDepartmentModal()" style="margin-left: 4%;" class="btn btn-success" >Add New</button>
+<div class="wrapper">
+  <hr />
 <table class="table">
   <thead>
     <tr>
@@ -14,100 +18,79 @@
       <td>{{department.departmentId}}</td>
       <td>{{department.departmentName}}</td>
       <td>{{department.departmentDescription}}</td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="deleteDepartment($event,department)">Delete</button>
+      </td>
     </tr>
   </tbody>
 </table>
-<td>
-  <button type="button" class="btn btn-danger" (click)="onDeleteDepartment(department)">Delete</button>
-</td>
+  <!-- Create Department Modal -->
+  <div class="modal" id="createDepartmentModalId" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Department Modal</h5>
+          <button (click)="closeCreateDepartmentModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="departmentForm" (ngSubmit)="submitDepartment()">
+            <div>
+              <label for="departmentName" class="form-label">Department Name</label>
+              <input type="text" formControlName="departmentName" class="form-control" id="departmentName"
+                     aria-describedby="basic-addon1" required>
 
+              <label style="margin-top: 4%;" for="departmentDescription" class="form-label">Department Description</label>
+              <textarea formControlName="departmentDescription" class="form-control" id="departmentDescription"
+                        aria-describedby="basic-addon1" required>
+              </textarea>
+            </div>
 
-<!--ADD DEPARTMENT MODAL-->
-<div class="modal" tabindex="-1" id="addWardModal">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-  <h5 class="modal-title">Add a department</h5>
-  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
-<div class="modal-body">
+            <div class="mb-3">
+              <label style="margin-top: 4%;" for="departmentDescription" class="form-label">Faculty</label>
+              <select [(ngModel)]="faculties" formControlName="faculty" class="form-select" aria-label="Default select example" id="facultyId" required>
+                <option *ngFor="let faculty of faculties" [ngValue]="faculty">{{ faculty.name }} </option>
+              </select>
+            </div>
 
-    <div class="mb-3">
-      <label for="departmentId" class="form-label">Department ID</label>
-      <input type="text" ngModel name="departmentId" class="form-control" id="departmentId" aria-describedby="basic-addon1" required>
+            <div class="modal-footer">
+              <button (click)="closeCreateDepartmentModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="departmentName" class="form-label">Department Name</label>
-      <input type="text" ngModel name="departmentName" class="form-control" id="departmentName" aria-describedby="basic-addon1" required>
+  </div>
+
+  <!-- Edit Department Modal -->
+  <div class="modal" id="editDepartmentModalId" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Department</h5>
+          <button (click)="closeEditDepartmentModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editDepartmentForm" (ngSubmit)="submitEditDepartmentForm()">
+            <div>
+              <label for="departmentName" class="form-label">Department Name</label>
+              <input type="text" formControlName="departmentName" class="form-control" id="departmentNameId"
+                     aria-describedby="basic-addon1" required>
+
+              <label style="margin-top: 4%;" for="departmentDescription" class="form-label">Department Description</label>
+              <textarea formControlName="departmentDescription" class="form-control" id="departmentDescriptionId"
+                        aria-describedby="basic-addon1" required>
+              </textarea>
+            </div>
+
+            <div class="modal-footer">
+              <button (click)="closeEditDepartmentModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="departmentDescription" class="form-label">Department Description</label>
-      <input type="text" ngModel name="departmentDescription" class="form-control" id="departmentDescription" aria-describedby="basic-addon1" required>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="department-close-button">Close
-      </button>
-
-    </div>
-
-</div>
-</div>
-</div>
+  </div>
 </div>
 
-<!--DELETE DEPARTMENT MODAL-->
-<div class="modal" tabindex="-1" id="deleteDepartmentModal">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-  <h5 class="modal-title">Delete department</h5>
-  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
-<div class="modal-body">
-  <p>Are you sure you want to delete department: {{ onDeleteDepartment }}?</p>
-  <form>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="delete-modal-close">Close</button>
-
-    </div>
-  </form>
-</div>
-</div>
-</div>
-</div>
-
-<!--EDIT or UPDATE DEPARTMENT MODAL-->
-<div class="modal" tabindex="-1" id="editDepartmentModal">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-  <h5 class="modal-title">Update department: {{ updateDepartment}}</h5>
-  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
-<div class="modal-body">
-
-    <div class="mb-3">
-      <label for="departmentId" class="form-label">Department ID</label>
-             aria-describedby="basic-addon1" required readonly>
-    </div>
-    <div class="mb-3">
-      <label for="departmentName" class="form-label">Department Name</label>
-
-             id="updatedDepartmentName" aria-describedby="basic-addon1" required>
-    </div>
-    <div class="mb-3">
-      <label for="departmentDescription" class="form-label">department Description</label>
-
-             id="updatedDepartmentDescription" aria-describedby="basic-addon1" required>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="updated-department-close-button">
-        Close
-      </button>
-    >
-    </div>
-
-</div>
-</div>
-</div>
-</div>
