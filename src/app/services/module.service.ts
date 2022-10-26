@@ -24,29 +24,23 @@ export class ModuleService {
 
   addModulex(modulex: IModule): Observable<IModule>
   {
-    return this.http.post<any>(`${this.apiServiceUrl}modulex/save`, modulex, httpOptions);
+    return this.http.post<any>(`${this.apiServiceUrl}module/save`, modulex, httpOptions);
   }
 
 
   getModulex(moduleId: string): Observable<IModule>
   {
-    return this.http.get<IModule>(`${this.apiServiceUrl}modulex/read/facultyId=${moduleId}`, httpOptions);
+    return this.http.get<IModule>(`${this.apiServiceUrl}module/read/facultyId=${moduleId}`, httpOptions);
   }
 
   getModules(): any
   {
-    return this.http.get<IModule[]>(`${this.apiServiceUrl}modulex/find-all`, httpOptions);
+    return this.http.get<IModule[]>(`${this.apiServiceUrl}module/find-all`, httpOptions);
   }
 
-  removeModulex(shift: IModule): any
+  removeModulex(moduleId: string): any
   {
-    return this.http.delete<any>(`${this.apiServiceUrl}modulex/delete`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + btoa('module-admin:721087c4-0ede-407e-8c1f-ac57e531f293')
-      }),
-      body: shift,
-    });
+    return this.http.delete<any>(`${this.apiServiceUrl}module/delete/${moduleId}`, httpOptions);
   }
   // public deleteLecturer(lecturerId: number): Observable<void> {
   //   return this.http.delete<void>(`${this.apiServerUrl}lecturer/delete/${lecturerId}`)

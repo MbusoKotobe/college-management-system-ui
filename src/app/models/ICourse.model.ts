@@ -1,6 +1,6 @@
 import {IModule} from "./IModule.model";
 
-export interface Course
+export interface ICourse
 {
   courseId: string;
   courseName: string;
