@@ -1,7 +1,8 @@
+// Author: Jody Kearns (209023651)
+// Date: 10 October 2022
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {IFaculty} from "../models/IFaculty.model";
 import {Observable} from "rxjs";
 import {ICourse} from "../models/ICourse.model";
 

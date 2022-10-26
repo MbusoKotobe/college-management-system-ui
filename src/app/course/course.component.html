@@ -1,3 +1,5 @@
+<!--Author: Jody Kearns (209023651)-->
+<!--Date: 10 October 2022-->
 <app-navbar></app-navbar>
 <h2 class="collegeManagementSystemHeading">Course Management Area</h2>
 <button (click)="showCreateCourseModal()" style="margin-left: 4%;" class="btn btn-success" >Add New</button>
@@ -9,7 +11,8 @@
       <th scope="col">Course ID</th>
       <th scope="col">Course Name</th>
       <th scope="col">Course Description</th>
-      <th scope="col"></th>
+      <th></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -21,7 +24,7 @@
         <button (click)="showDeleteCourse(course)" type="button" class="btn btn-danger">Delete</button>
       </td>
       <td>
-        <button type="button" class="btn btn-secondary" (click)="showViewCourseDetails(course)">View Details</button>
+        <button type="button" class="btn btn-secondary" (click)="showViewCourseDetails(course)" >View Details</button>
       </td>
     </tr>
     </tbody>
