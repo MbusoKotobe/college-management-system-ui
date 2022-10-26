@@ -1,0 +1,109 @@
+<app-navbar></app-navbar>
+
+<h2 class="collegeManagementSystemHeading">Student Management Area</h2>
+<button (click)="showCreateStudentModal()" style="margin-left: 4%;" class="btn btn-success" >Add New</button>
+<div class="wrapper">
+  <hr/>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Middle Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Student Number</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let student of students; index as i;" (click)="showEditStudentModal(student)">
+      <th scope=i> {{i + 1}}</th>
+      <td>{{student.firstName}}</td>
+      <td>{{student.middleName}}</td>
+      <td>{{student.lastName}}</td>
+      <td>{{student.studentNumber}}</td>
+      <td>
+        <button (click)="deleteStudent($event, student)" type="button" class="btn btn-danger">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Create Student Modal -->
+  <div class="modal" id="createStudentModalId" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Student Modal</h5>
+          <button (click)="closeCreateStudentModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="studentForm" (ngSubmit)="submitStudent()">
+            <div>
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" formControlName="firstName" class="form-control" id="firstName"
+                     aria-describedby="basic-addon1" required>
+
+              <label for="middleName" class="form-label">Middle Name</label>
+              <input type="text" formControlName="middleName" class="form-control" id="middleName"
+                        aria-describedby="basic-addon1" required>
+
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" formControlName="lastName" class="form-control" id="lastName"
+                        aria-describedby="basic-addon1" required>
+
+              <label for="studentNumber" class="form-label">Student Number</label>
+              <input type="text" formControlName="studentNumber" class="form-control" id="studentNumber"
+                     aria-describedby="basic-addon1" required>
+
+            </div>
+
+            <div class="modal-footer">
+              <button (click)="closeCreateStudentModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Student Modal -->
+  <div class="modal" id="editStudentModalId" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Student</h5>
+          <button (click)="closeEditStudentModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editStudentForm" (ngSubmit)="submitEditStudentForm()">
+            <div>
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" formControlName="firstName" class="form-control" id="firstNameId"
+                     aria-describedby="basic-addon1" required>
+
+              <label for="middleName" class="form-label">Middle Name</label>
+              <input type="text"  formControlName="middleName" class="form-control" id="middleNameId"
+                     aria-describedby="basic-addon1" required>
+
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" formControlName="lastName" class="form-control" id="lastNameId"
+                     aria-describedby="basic-addon1" required>
+
+              <label for="studentNumber" class="form-label"></label>
+              <input type="hidden" formControlName="studentNumber" class="form-control" id="studentNumberId"
+                     aria-describedby="basic-addon1" required>
+
+            </div>
+
+            <div class="modal-footer">
+              <button (click)="closeEditStudentModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
