@@ -13,9 +13,8 @@ import { FacultyService } from '../services/faculty.service';
   templateUrl: './department.component.html',
   styleUrls: ['./department.component.css']
 })
-export class DepartmentComponent implements OnInit {
-
-
+export class DepartmentComponent implements OnInit
+{
   departmentForm = new FormGroup(
   {
     departmentId: new FormControl(0),
@@ -25,14 +24,12 @@ export class DepartmentComponent implements OnInit {
   });
 
   editDepartmentForm = new FormGroup(
-
   {
     departmentId: new FormControl(0),
     departmentName: new FormControl(""),
     departmentDescription: new FormControl("!"),
     faculty: new FormControl(new Object())
-  }
-  );
+  });
 
   department: IDepartment =
   {
@@ -40,51 +37,63 @@ export class DepartmentComponent implements OnInit {
     departmentName: "",
     departmentDescription: "",
     faculty: new Object()
-
   }
 
-  faculties = new Array <IFaculty>();
+  departmentToUpdate: IDepartment =
+  {
+    departmentId: 0,
+    departmentName: "",
+    departmentDescription: "",
+    faculty: new Object()
+  }
+
+  faculties: IFaculty[] = [];
 
   departments: Array<IDepartment> = new Array<IDepartment>();
 
-  constructor(private departmentService: DepartmentService, private toastr: ToastrUtility
-  ,private facultyService: FacultyService)
+  constructor (private departmentService: DepartmentService, private toastr: ToastrUtility
+    , private facultyService: FacultyService)
   { }
 
   ngOnInit(): void
   {
     this.getDepartments();
-    this.fetchFaculties();
+    this.getFaculties();
+    setTimeout(() => {
+      console.log(this.departments);
+    }, 2500);
   }
 
-  fetchFaculties(): void
-  {
-    this.faculties = this.facultyService.getFaculties();
-  }
 
   saveDepartment(department: IDepartment): void
   {
+    console.log(department);
     this.departmentService.addDepartment(department).subscribe(
-    {
-      error: (error) => this.toastr.showtoastrError(error, "Request Status"),
-      complete: () => this.toastr.showtoastrSuccess("Save Request Successful.", "Request Status")
-    });
+      {
+        error: (error) => {
+          this.toastr.showtoastrError(error.error, "Request Status");
+          console.log(error);
+        },
+        complete: () => this.toastr.showtoastrSuccess("Save Request Successful.", "Request Status")
+      });
 
-    setTimeout(() => {
-      window.location.reload();
-    }, 1500);
+    setTimeout(() =>
+    {
+      //window.location.reload();
+    }, 1800);
   }
 
   getDepartment(departmentId: number): void
   {
     this.departmentService.getDepartment(departmentId).subscribe(
-    {
-      next: (respoonse: IDepartment) => this.department = respoonse,
-      error: (error: any) => console.error(error),
-      complete: () => console.info("Fetch Request Successful.")
-    });
+      {
+        next: (respoonse: IDepartment) => this.department = respoonse,
+        error: (error: any) => console.error(error),
+        complete: () => console.info("Fetch Request Successful.")
+      });
 
-    setTimeout(() => {
+    setTimeout(() =>
+    {
 
     }, 1500);
   }
@@ -92,26 +101,45 @@ export class DepartmentComponent implements OnInit {
   getDepartments(): void
   {
     this.departmentService.getDepartments().subscribe(
-    {
-      next: (response: IDepartment[]) => this.departments = response,
-      error: (error: any) => console.error(error),
-      complete: () => console.info("Fetch departments Request Successful.")
-    });
+      {
+        next: (response: IDepartment[]) => this.departments = response,
+        error: (error: any) => console.error(error),
+        complete: () => console.info("Fetch departments Request Successful.")
+      });
 
-    setTimeout(() => {
+    setTimeout(() =>
+    {
 
     }, 1500);
   }
 
   removeDepartment(department: IDepartment): void
   {
-    this.departmentService.removeDepartment(department).subscribe(
+    this.departmentService.removeDepartment(department.departmentId!).subscribe(
+      {
+        error: (error: any) => {
+          this.toastr.showtoastrError(error, "Request Status");
+          console.log(error);
+        }
+      });
+
+    setTimeout(() =>
     {
-      error: (error: any) => this.toastr.showtoastrError(error, "Request Status"),
+      window.location.reload();
+    }, 1500);
+  }
+
+  getFaculties(): void
+  {
+    this.facultyService.getFaculties().subscribe(
+    {
+      next: (response: IFaculty[]) => this.faculties = response,
+      error: (error: any) => console.error(error),
+      complete: () => console.info("Fetch Faculties Request Successful.")
     });
 
-    setTimeout(() => {
-      window.location.reload();
+    setTimeout(() => { 
+      
     }, 1500);
   }
 
@@ -127,6 +155,7 @@ export class DepartmentComponent implements OnInit {
 
   showEditDepartmentModal(department: IDepartment): void
   {
+    this.departmentToUpdate = department;
     document.getElementById("editDepartmentModalId")!.style.display = "block";
     this.setDepartment(department);
     this.setUpEditDepartmentModal(department);
@@ -139,19 +168,17 @@ export class DepartmentComponent implements OnInit {
 
   submitDepartment(): void
   {
-
     this.department.departmentName = this.departmentForm.value.departmentName!;
     this.department.departmentDescription = this.departmentForm.value.departmentDescription!;
-    this.department.faculty = this.department.value.faculty;
+    this.department.faculty = this.departmentForm.value.faculty!;
     this.saveDepartment(this.department);
   }
 
   submitEditDepartmentForm(): void
   {
-    this.department.departmentName = this.editDepartmentForm.value.departmentName!;
-    this.department.departmentDescription = this.editDepartmentForm.value.departmentDescription!;
-    this.department.faculty = this.editDepartmentForm.value.faculty;
-    this.saveDepartment(this.department);
+    this.departmentToUpdate.departmentName = this.editDepartmentForm.value.departmentName!;
+    this.departmentToUpdate.departmentDescription = this.editDepartmentForm.value.departmentDescription!;
+    this.saveDepartment(this.departmentToUpdate);
 
   }
 
@@ -174,6 +201,6 @@ export class DepartmentComponent implements OnInit {
   {
     this.department.departmentId = department.departmentId;
     this.department.departmentName = department.departmentName;
-    this.department.departmentDescription= department.departmentDescription;
+    this.department.departmentDescription = department.departmentDescription;
   }
 }

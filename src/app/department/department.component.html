@@ -10,14 +10,15 @@
       <th scope="col">Department Id</th>
       <th scope="col">Department Name</th>
       <th scope="col">Department Description</th>
+      <th scope="col">Department Faculty</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let department of departments; index as i;">
-      <!-- <th scope="row">{{i+1}}</th> -->
+    <tr *ngFor="let department of departments; index as i;" (click)="showEditDepartmentModal(department)">
       <td>{{department.departmentId}}</td>
       <td>{{department.departmentName}}</td>
       <td>{{department.departmentDescription}}</td>
+      <td>{{department.faculty!.facultyName}}</td>
       <td>
         <button type="button" class="btn btn-danger" (click)="deleteDepartment($event,department)">Delete</button>
       </td>

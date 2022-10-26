@@ -22,7 +22,7 @@ import { ModulexComponent } from './modulex/modulex.component';
     NavbarComponent,
     LoginComponent,
     SignupComponent,
-    DepartmentComponent
+    DepartmentComponent,
     CourseComponent,
     ModulexComponent
   ],

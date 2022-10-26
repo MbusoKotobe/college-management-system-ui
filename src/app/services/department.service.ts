@@ -36,8 +36,8 @@ export class DepartmentService
         return this.http.get<IDepartment[]>(`${this.apiServiceUrl}department/find-all`,httpOptions);
     }
 
-    removeDepartment(department: IDepartment): any
+    removeDepartment(departmentId: number): any
     {
-        return this.http.post<any>(`${this.apiServiceUrl}department/delete`, department,httpOptions);
+        return this.http.delete<any>(`${this.apiServiceUrl}department/delete/${departmentId}`, httpOptions);
     }
 }
