@@ -45,11 +45,6 @@ export class FacultyComponent implements OnInit {
     this.getFaculties();
   }
 
-  fetchFaculties(): void
-  {
-    throw new Error('Method not implemented.');
-  }
-
   saveFaculty(faculty: IFaculty): void
   {
     this.facultyService.addFaculty(faculty).subscribe(
