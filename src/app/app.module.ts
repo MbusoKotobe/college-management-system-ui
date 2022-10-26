@@ -12,6 +12,7 @@ import { DepartmentComponent } from './department/department.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { StudentViewComponent } from './student-view/student-view.component';
 import { CourseComponent } from './course/course.component';
 import { ModulexComponent } from './modulex/modulex.component';
 
@@ -22,9 +23,10 @@ import { ModulexComponent } from './modulex/modulex.component';
     NavbarComponent,
     LoginComponent,
     SignupComponent,
+    StudentViewComponent,
     DepartmentComponent,
     CourseComponent,
-    ModulexComponent
+    ModulexComponent,
   ],
   imports: [
     BrowserModule,
