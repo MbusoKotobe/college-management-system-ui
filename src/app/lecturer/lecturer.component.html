@@ -1,0 +1,107 @@
+<app-navbar></app-navbar>
+  <h2 class="collegeManagementSystemHeading">Lecturer Management Page</h2>
+<button (click)="showCreateLecturerModal()" style="margin-left: 4%;" class="btn btn-success" >Add New</button>
+<div class="wrapper">
+<hr>
+  <table class="table">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Lecturer Id</th>
+    <th scope="col">First Name</th>
+    <th scope="col">Middle Name</th>
+    <th scope="col">Last Name</th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let lecturer of lecturers; index as i;" (click)="showEditLecturerModal(lecturer)">
+    <th scope=i>{{lecturer.lecturerId}}</th>
+    <td>{{ lecturer.firstName }}</td>
+    <td>{{ lecturer.middleName }}</td>
+    <td>{{ lecturer.lastName }}</td>
+    <td>
+      <button (click)="deleteLecturer($event, lecturer)" type="button" class="btn btn-danger">Delete</button>
+    </td>
+  </tr>
+  </tbody>
+  </table>
+
+<!--ADD LECTURER MODAL-->
+<div class="modal" id="createLecturerModalId" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Lecturer</h5>
+        <button (click)="closeCreateLecturerModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="lecturerForm" (ngSubmit)="submitLecturer()">
+          <div>
+            <label for="lecturerId" class="form-label">Lecturer ID</label>
+            <input type="text"  formControlName="firstName" class="form-control" id="lecturerId"
+                   aria-describedby="basic-addon1" required>
+
+            <label for="lecturerFirstName" class="form-label">First Name</label>
+            <input type="text"  formControlName="firstName" class="form-control" id="lecturerFirstName"
+                   aria-describedby="basic-addon1" required>
+
+            <label for="lecturerMiddleName" class="form-label">Middle Name</label>
+            <input type="text"  formControlName="middleName" class="form-control" id="lecturerMiddleName"
+                   aria-describedby="basic-addon1" required>
+
+            <label for="lecturerLastName" class="form-label">Last Name</label>
+            <input type="text" formControlName="lastName" class="form-control" id="lecturerLastName"
+                   aria-describedby="basic-addon1" required>
+          </div>
+          <div class="modal-footer">
+            <button (click)="closeCreateLecturerModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+            </button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--EDIT LECTURER MODAL-->
+<div class="modal" id="editLecturerModalId" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Lecturer</h5>
+        <button (click)="closeEditLecturerModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editLecturerForm" (ngSubmit)="submitEditLecturerForm()">
+          <div>
+            <label for="lecturerId2" class="form-label">Lecture ID</label>
+            <input type="text" formControlName="lecturerId" class="form-control"
+                   id="lecturerId2" aria-describedby="basic-addon1" required>
+
+            <label for="lecturerFirstName2" class="form-label">Lecturer Name</label>
+            <input type="text" formControlName="firstName" class="form-control"
+                   id="lecturerFirstName2" aria-describedby="basic-addon1" required>
+
+            <label for="lecturerMiddleName2" class="form-label">Middle Name</label>
+            <input type="text" formControlName="middleName" class="form-control"
+                   id="lecturerMiddleName2" aria-describedby="basic-addon1" required>
+
+            <label for="lecturerLastName2" class="form-label">Lecturer Surname</label>
+            <input type="text" formControlName="lastName" class="form-control"
+                   id="lecturerLastName2" aria-describedby="basic-addon1" required>
+          </div>
+
+          <div class="modal-footer">
+            <button (click)="closeEditLecturerModal()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Close</button>
+            <button  type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+

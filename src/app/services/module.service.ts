@@ -18,7 +18,7 @@ const httpOptions = {
 })
 export class ModuleService {
 
-  private apiServiceUrl = environment.apiBaseUrl;
+  private apiServiceUrl= environment.apiBaseUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -42,5 +42,8 @@ export class ModuleService {
   {
     return this.http.delete<any>(`${this.apiServiceUrl}module/delete/${moduleId}`, httpOptions);
   }
+  // public deleteLecturer(lecturerId: number): Observable<void> {
+  //   return this.http.delete<void>(`${this.apiServerUrl}lecturer/delete/${lecturerId}`)
+  // }
 }
 

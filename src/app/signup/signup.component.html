@@ -8,52 +8,71 @@
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
                     class="img-fluid" alt="Sample image">
           </div>
-  
           <div class="col-lg-6 mb-5 mb-lg-0">
             <div class="card">
-              <div class="card-body py-5 px-md-5">
-                <form [formGroup]="signupForm" (ngSubmit)="submitSignup()">
-                  <!-- 2 column grid layout with text inputs for the first and last names -->
-  
-                  <!-- Username input -->
-                  <div class="form-outline mb-4">
-                    <label style="margin-left: 1%; font-weight: 600; font-size: 18.5px;" class="form-label" for="form3Example3">Username</label>
-                    <input type="text" formControlName="username" id="form3Example3" class="form-control form-control-lg"
-                            placeholder=" " />
+              <form [formGroup]="signupForm" (ngSubmit)="submitSignup()">
+                <!-- 2 column grid layout with text inputs for the first and last names -->
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label style="margin-left: 1%; font-weight: 600; font-size: 18.5px;" class="form-label" for="form3Example1">First name</label>
+                      <input type="text" id="form3Example3" class="form-control form-control-lg"
+                             placeholder=" " />
+                    </div>
                   </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label style="margin-left: 1%; font-weight: 600; font-size: 18.5px;" class="form-label" for="form3Example2">Last name</label>
+                      <input type="text" id="form3Example3" class="form-control form-control-lg"
+                             placeholder=" " />
+                    </div>
+                  </div>
+                </div>
 
-                  <!-- Usertype input confirmation-->
-                  <div class="form-outline mb-4">
-                    <label style="margin-left: 1%; font-weight: 600; font-size: 18.5px;" class="form-label" for="form3Example4">Type of user</label>
-                    <select formControlName="userType" id="form3Example3" class="form-control form-control-lg">
-                      <option value="admin">Admin</option>
-                      <option value="user">User</option>
-                    </select>
-                  </div>
-  
-                  <!-- Password input -->
-                  <div class="form-outline mb-4">
-                    <label style="margin-left: 1%; font-weight: 600; font-size: 18.5px;" class="form-label" for="form3Example4">Password</label>
-                    <input type="password" formControlName="password" id="form3Example3" class="form-control form-control-lg"
-                            placeholder=" " />
-                  </div>
+                <!-- Email input -->
 
-                  <!-- Password input confirmation-->
-                  <div class="form-outline mb-4">
-                    <label style="margin-left: 1%; font-weight: 600; font-size: 18.5px;" class="form-label" for="form3Example4">Confirm Password</label>
-                    <input type="password" formControlName="passwordConfirm" id="form3Example3" class="form-control form-control-lg"
-                            placeholder=" " />
-                  </div>                
-  
-                  <!-- Submit button -->
+                <!-- Username input -->
+                <div class="form-outline mb-4">
+                  <label style="margin-left: 1%; font-weight: 600; font-size: 18.5px;" class="form-label" for="form3Example3">Username</label>
+                  <input type="text" formControlName="username" id="form3Example3" class="form-control form-control-lg"
+                         placeholder=" " />
+                </div>
+
+                <!-- Usertype input confirmation-->
+                <div class="form-outline mb-4">
+                  <label style="margin-left: 1%; font-weight: 600; font-size: 18.5px;" class="form-label" for="form3Example4">Type of user</label>
+                  <select formControlName="userType" id="form3Example3" class="form-control form-control-lg">
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                  </select>
+                </div>
+
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                  <label style="margin-left: 1%; font-weight: 600; font-size: 18.5px;" class="form-label" for="form3Example4">Password</label>
+                  <input type="password" formControlName="password" id="form3Example3" class="form-control form-control-lg"
+                         placeholder=" " />
+                </div>
+
+                <!-- Password input confirmation-->
+                <div class="form-outline mb-4">
+                  <label style="margin-left: 1%; font-weight: 600; font-size: 18.5px;" class="form-label" for="form3Example4">Confirm Password</label>
+                  <input type="password" formControlName="passwordConfirm" id="form3Example3" class="form-control form-control-lg"
+                         placeholder=" " />
+                </div>
+
+                <!-- Submit button -->
+                <button type="button" class="btn btn-primary btn-lg"
+                        style="padding-left: 2.5rem; padding-right: 2.5rem; background: #1e2461;">Signup</button>
+
+                <!-- Submit button -->
                   <button type="submit" class="btn btn-primary btn-lg"
-                            style="padding-left: 2.5rem; padding-right: 2.5rem; background: #1e2461;">Signup</button>     
+                            style="padding-left: 2.5rem; padding-right: 2.5rem; background: #1e2461;">Signup</button>
                 </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     <!-- Jumbotron -->
   </section>

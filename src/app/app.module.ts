@@ -6,6 +6,7 @@ import { FormGroup } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FacultyComponent } from './faculty/faculty.component';
+import { LecturerComponent } from './lecturer/lecturer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
@@ -22,6 +23,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
   declarations: [
     AppComponent,
     FacultyComponent,
+    LecturerComponent,
     NavbarComponent,
     LoginComponent,
     SignupComponent,
