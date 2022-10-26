@@ -1,2 +1,114 @@
 <app-navbar></app-navbar>
 <h2 class="collegeManagementSystemHeading">Course Management Area</h2>
+<button (click)="showCreateCourseModal()" style="margin-left: 4%;" class="btn btn-success" >Add New</button>
+<div class="wrapper">
+  <hr />
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Course ID</th>
+      <th scope="col">Course Name</th>
+      <th scope="col">Course Description</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let course of courses; index as i;" >
+      <th scope=i (click)="showEditCourseModal(course)" role="button"> {{course.courseId}}</th>
+      <td>{{course.courseName}}</td>
+      <td>{{course.courseDescription}}</td>
+      <td>
+        <button (click)="deleteCourse($event, course)" type="button" class="btn btn-danger">Delete</button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-secondary" (click)="showViewCourseDetails(course)">View Details</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Create Course Modal -->
+<div class="modal" id="createCourseModalId" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Course</h5>
+        <button (click)="closeCreateCourseModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="courseForm" (ngSubmit)="submitCourse()">
+          <div>
+            <label for="courseId" class="form-label">Course ID</label>
+            <input type="text" formControlName="courseId" class="form-control" id="courseId" aria-describedby="basic-addon1" required>
+            <label style="margin-top: 4%;" for="courseName" class="form-label">Course Name</label>
+            <input type="text" formControlName="courseName" class="form-control" id="courseName" aria-describedby="basic-addon1" required>
+            <label style="margin-top: 4%;" for="courseDescription" class="form-label">Course Description</label>
+            <textarea formControlName="courseDescription" class="form-control" id="courseDescription" aria-describedby="basic-addon1" required></textarea>
+            <label style="margin-top: 4%;" for="modules" class="form-label">Modules</label>
+            <ng-select [items]="modules" formControlName="modules" bindLabel="moduleName" (change)="itemSelected($event)" [multiple]="true" id="modules" required></ng-select>
+
+          </div>
+          <div class="modal-footer">
+            <button (click)="closeCreateCourseModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" [disabled]="courseForm.invalid" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Course Modal -->
+<div class="modal" id="editCourseModalId" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Course</h5>
+        <button (click)="closeEditCourseModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editCourseForm" (ngSubmit)="submitEditCourseForm()">
+          <div>
+
+            <label for="editCourseId" class="form-label">Course ID</label>
+            <input type="text" formControlName="editCourseId" class="form-control" id="editCourseId" aria-describedby="basic-addon1" readonly required>
+
+            <label style="margin-top: 4%;" for="editCourseName" class="form-label">Course Name</label>
+            <input type="text" formControlName="editCourseName" class="form-control" id="editCourseName" aria-describedby="basic-addon1" required>
+
+            <label style="margin-top: 4%;" for="editCourseDescription" class="form-label">Course Description</label>
+            <textarea formControlName="editCourseDescription" class="form-control" id="editCourseDescription" aria-describedby="basic-addon1" required></textarea>
+
+            <label style="margin-top: 4%;" for="editModules" class="form-label">Modules</label>
+            <ng-select [items]="modules" formControlName="editModules" bindLabel="moduleName" (change)="itemSelected($event)" [multiple]="true" id="editModules" required></ng-select>
+
+          </div>
+
+          <div class="modal-footer">
+            <button (click)="closeEditCourseModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" [disabled]="editCourseForm.invalid" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--View details modal-->
+<div class="modal" tabindex="-1" id="viewCourseDetails">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">View Details - {{ course.courseName }}</h5>
+        <button (click)="closeViewCourseDetails()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngFor="let module of course.modules">
+        <p id="listOfModules">{{ module.moduleId}} - {{module.moduleName }}</p>
+      </div>
+      <div class="modal-footer">
+        <button (click)="closeViewCourseDetails()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
