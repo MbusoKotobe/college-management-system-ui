@@ -12,12 +12,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'faculty', component: FacultyComponent },
-<<<<<<< HEAD
-  { path: 'student-view', component: StudentViewComponent}
-=======
+  { path: 'student-view', component: StudentViewComponent},
   { path: 'course', component: CourseComponent },
   { path: 'module', component: ModulexComponent}
->>>>>>> 7bea653cbb654ecbd9eca4939a8d04d2d3eb2dcf
 ];
 
 @NgModule({
